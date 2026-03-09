@@ -1,0 +1,8 @@
+streamlit 
+spacy 
+pypdf 
+scikit-learn 
+python-docx 
+langchain-groq 
+langchain-core 
+python-dotenv 
