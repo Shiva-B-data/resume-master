@@ -4,8 +4,6 @@ import pypdf
 import io
 import os
 import re
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -72,7 +70,6 @@ def extract_tech_keywords(text):
 
 def calculate_ats_score(resume_text, jd_text):
     resume_lower = resume_text.lower()
-    jd_lower = jd_text.lower()
 
     resume_kw = extract_keywords(resume_text)
     jd_kw = extract_keywords(jd_text)
@@ -103,7 +100,7 @@ def get_keyword_analysis(resume_text, jd_text):
     missing_tech = jd_tech.difference(resume_tech)
     return matching, missing, matching_tech, missing_tech
 
-def get_ats_report(resume_text, jd_text):
+def get_ats_report(resume_text):
     resume_lower = resume_text.lower()
     report = {"passed": [], "failed": [], "warnings": []}
 
@@ -553,7 +550,7 @@ if analyze_btn:
             resume_text = extract_text(resume_file)
             score = calculate_ats_score(resume_text, jd_text)
             matching, missing, matching_tech, missing_tech = get_keyword_analysis(resume_text, jd_text)
-            ats_report = get_ats_report(resume_text, jd_text)
+            ats_report = get_ats_report(resume_text)
 
         score_pct = score * 10
         if score >= 7.5:
